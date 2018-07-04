@@ -1,4 +1,9 @@
 let csvToJson = require('convert-csv-to-json');
+let details = require('../questn1/extract.js');
+let seasonYear = details.seasonYear;
+var teamList = details.teamList;
+
+// console.log(teamList);
 
 let fileInputName = '../ipl_data/matches.csv';
 let fileOutputName = 'matches.json';
@@ -17,6 +22,34 @@ for(let i=0,temp={};i<json.length;i++){
 		team.push(temp);
 	}	
 }
-console.log(team[0].season);
+// console.log(team);
+// console.log((seasonYear));
+// console.log(team[0].winner);
 // for(let va of (new Set(team.season)))
 	// console.log(va);
+var winnerList = [];
+var count;
+var temp={};
+for(let teams of teamList){
+	temp={name:'',data:[]};
+	temp.name=teams;
+	// console.log(teams);
+		for(let seasonYr of seasonYear){
+		count=0;
+		// console.log(seasonYr);
+		// console.log(teamList);
+		for(let teamDetails1 of team){
+			// console.log(teamDetails1);
+			if(seasonYr===teamDetails1.season)
+			{
+				if(teams==teamDetails1.winner)
+					count++;
+			}
+			
+		}
+		// console.log(count);
+		temp.data.push(count);
+	}
+	winnerList.push(temp);
+}
+console.log(winnerList);
