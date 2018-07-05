@@ -14,11 +14,14 @@ for (let i = 0, j = 0; i < json.length; i++) {
 teamPlaying = Array.from(teamPlaying);
 console.log(teamPlaying);
 
-var extraRuns = [];
+
+
+var series=[];
 let json1 = csvToJson.fieldDelimiter(',').getJsonFromCsv("../ipl_data/deliveries.csv");
-var extra, extra1, team1;
-for (var teams of teamPlaying) {
-    extra = 0;
+var extra;
+var temp={};
+for (let teams of teamPlaying) {
+    extra = 0;temp={};
     for (let j = 0; j < id.length; j++) {
         for (let i = 0; i < json1.length; i++) {
             // console.log(json1[i].id);
@@ -29,5 +32,7 @@ for (var teams of teamPlaying) {
             }
         }
     }
-                console.log(extra);
-}
+    temp.name=teams;
+    temp.data=extra;
+    series.push(temp);            ;
+}console.log(series);
