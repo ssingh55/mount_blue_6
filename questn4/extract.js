@@ -44,4 +44,8 @@ bowlerNameArray.forEach(function(bowlerName){
 		temp.eco=(totalRuns/totalDeliveries)*6;
 		series.push(temp);
 });
+series.sort(function (a,b){
+        if (parseFloat(a.eco.toFixed(4)) < parseFloat(b.eco.toFixed(4))) return -1;
+        else return 1;
+});
 console.log(series);

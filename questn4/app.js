@@ -75,7 +75,15 @@ $(document).ready(function() {
         temp.data = [(totalRuns / totalDeliveries) * 6];
         series.push(temp);
     });
+    series.sort(function (a,b){
+        if (parseFloat(a.data[0].toFixed(4)) < parseFloat(b.data[0].toFixed(4))) return -1;
+        else return 1;
+	});
     console.log(series);
+    var temp=[];
+    for(let i=0;i<10;i++)
+    	temp[i]=series[i];
+    series=temp;
     var json = {};
     json.chart = chart;
     json.title = title;
