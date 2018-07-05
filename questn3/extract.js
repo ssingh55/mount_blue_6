@@ -34,5 +34,5 @@ for (let teams of teamPlaying) {
     }
     temp.name=teams;
     temp.data=extra;
-    series.push(temp);            ;
+    series.push(temp);
 }console.log(series);

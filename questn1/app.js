@@ -54,7 +54,7 @@ $(document).ready(function() {
             };
 
         var series = new Array();
-        for (var yr of Array.from(new Set(seasonYear))) {
+        for (var yr of Array.from(new Set(seasonYear)).sort()) {
             var count = 0;
             for (let i = 0; i < seasonYear.length; i++) {
                 if (yr == seasonYear[i])

@@ -8,7 +8,7 @@ $(document).ready(function() {
         teamList[i] = myData[i].team1;
     }
     teamList = Array.from(new Set(teamList));
-    seasonYear = Array.from(new Set(seasonYear));
+    seasonYear = Array.from(new Set(seasonYear)).sort();
     for (let i = 0, temp = {}; i < myData.length; i++) {
         temp = {};
         if (myData[i].winner != '') {
