@@ -33,4 +33,4 @@ var extractedYear = new Array();
 // console.log(extractedYear);
 module.exports.teamList = Array.from(new Set(teamList));
 
-module.exports.seasonYear = Array.from(new Set(seasonYear));
+// module.exports.seasonYear = Array.from(new Set(seasonYear));

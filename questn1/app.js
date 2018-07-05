@@ -42,9 +42,9 @@ $(document).ready(function() {
 
             }
         };
-        var tooltip = {
-               valueSuffix: '\xB0C'
-            }
+        // var tooltip = {
+        //        valueSuffix: '\xB0C'
+        //     }
 
         var legend = {
                layout: 'vertical',
@@ -62,7 +62,7 @@ $(document).ready(function() {
             }
             series.push({'name':yr,'data':[[yr,count]]});
         }
-        console.log(series);
+        // console.log(series);
 
         var json = {};
         json.chart = chart;
