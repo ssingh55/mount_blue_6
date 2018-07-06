@@ -1,6 +1,16 @@
 // let teamList = require('../questn1/extract')
 let csvToJson = require('convert-csv-to-json');
 
+// var sys = require('sys')
+// var exec = require('child_process').exec;
+// function puts(error, stdout, stderr) {};
+// exec("sed -i '/season\|id\|{\|}\|\[\|\]/!d' matches.json", puts);
+// child = exec("sed -i '/season\|{\|}\|[\|]/!d' matches.json",function(error,stdout,stderr){});
+
+//sed  '/\"id\|season\|{\|}\|\[\|\]/!d' matches.json | grep -A 2 -B 1 2015 | sed '1s/^/data = [\n{\n/'
+//sed -i  '/match_id\|player_dismissed\|bowling_team\|extra_runs\|bowler\|{\|}\|\[\|\]/!d' deliveries.json
+
+
 let json = csvToJson.fieldDelimiter(',').getJsonFromCsv("../ipl_data/matches.csv");
 var id = [];
 var teamPlaying = new Set();

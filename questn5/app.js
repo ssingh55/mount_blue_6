@@ -1,22 +1,36 @@
 $(document).ready(function() {
     var myData = data,
-        id = [];
-    var myData1 = data1;
-    myData.forEach(function(jsonItem) {
-        if (jsonItem.season === '2015') {
-            id.push(jsonItem.id);
-        }
-    });
+        myData1 = data1;
 
-    var bowlerNameArray = new Set();
-    myData1.forEach(function(jsonItem) {
-        id.forEach(function(idDetails) {
-            if (idDetails === jsonItem.match_id) {
+        // console.log(myData);
+        // console.log(myData1);
+    function findId(myData) {
+        var id = [];
+        myData.forEach(function(jsonItem) {
+            if (jsonItem.season === '2015') {
+                id.push(jsonItem.id);
+            }
+        });
+        return id;
+    }
+
+
+    function findBowlerName(myData1, id) {
+        var bowlerNameArray = new Set();
+        console.log(myData1);
+        myData1.forEach(function(jsonItem) {
+            if (id.includes(jsonItem.match_id)) {
                 bowlerNameArray.add(jsonItem.bowler);
             }
         });
-    });
-    bowlerNameArray = Array.from(bowlerNameArray);
+        bowlerNameArray = Array.from(bowlerNameArray);
+        // console.log(bowlerNameArray);
+        return bowlerNameArray;
+    }
+    // console.log(findId(myData));
+    console.log(findBowlerName(myData1, findId(myData)));
+
+
 
     var chart = {
         type: 'column'
@@ -54,36 +68,42 @@ $(document).ready(function() {
     };
 
     //series
-    var totalRuns = 0,
-        totalDeliveries = 0;
-    var series = [],
-        temp = {};
-    bowlerNameArray.forEach(function(bowlerName) {
-        temp = {};
-        totalRuns = 0, totalDeliveries = 0;
-        id.forEach(function(idDetails) {
+    function findSeries(bowlerNameArray, myData1, id) {
+        var totalRuns = 0,
+            totalDeliveries = 0;
+        var series = [],
+            temp = {};
+        bowlerNameArray.forEach(function(bowlerName) {
+            temp = {};
+            totalDeliveries = 0;
             myData1.forEach(function(jsonItem) {
-                if (idDetails === jsonItem.match_id) {
+                if (id.includes(jsonItem.match_id)) {
                     if (bowlerName === jsonItem.bowler) {
-                        if(jsonItem.player_dismissed!='')
+                        if (jsonItem.player_dismissed != '')
                             totalDeliveries++;
                     }
+
                 }
             });
+            temp.name = bowlerName;
+            temp.data = [totalDeliveries];
+            series.push(temp);
+
         });
-        temp.name = bowlerName;
-        temp.data = [totalDeliveries];
-        series.push(temp);
-    });
-    series.sort(function(a, b) {
-        if (parseFloat(a.data[0].toFixed(4)) > parseFloat(b.data[0].toFixed(4))) return -1;
-        else return 1;
-    });
-    console.log(series);
-    var temp = [];
-    for (let i = 0; i < 10; i++)
-        temp[i] = series[i];
-    series = temp;
+
+        series.sort(function(a, b) {
+            if (parseFloat(a.data[0].toFixed(4)) > parseFloat(b.data[0].toFixed(4))) return -1;
+            else return 1;
+        });
+
+        // console.log(series);
+        var temp = [];
+        for (let i = 0; i < 10; i++)
+            temp[i] = series[i];
+        series = temp;
+        return series;
+    }
+    var series = findSeries((findBowlerName(myData1, findId(myData))), myData1, findId(myData));
     var json = {};
     json.chart = chart;
     json.title = title;
