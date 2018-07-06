@@ -14,14 +14,12 @@ json.forEach(function(jsonItem){
 
 var bowlerNameArray=new Set();
 json1.forEach(function(jsonItem){
-	id.forEach(function(idDetails){
-		if(idDetails===jsonItem.match_id){
+	if(id.includes(jsonItem.match_id)){
 			bowlerNameArray.add(jsonItem.bowler);
 		}
-	});
 });
 bowlerNameArray=Array.from(bowlerNameArray);
-
+console.log(bowlerNameArray);
 
 // bowlerNameArray=['YS Chahal'];
 // id=['557','562'];
@@ -30,16 +28,14 @@ var series=[],temp={};
 bowlerNameArray.forEach(function(bowlerName){
 	temp={};
 	totalDeliveries=0;
-	id.forEach(function(idDetails){
-		json1.forEach(function(jsonItem){
-			if(idDetails===jsonItem.match_id){
-				if(bowlerName===jsonItem.bowler){
+	json1.forEach(function(jsonItem){
+		if(id.includes(jsonItem.match_id)){	
+			if(bowlerName===jsonItem.bowler){
 					if(jsonItem.player_dismissed!='')
 						totalDeliveries++;
 				}
 			}
 		});
-	});
 		temp.name=bowlerName;
 		temp.wicket=totalDeliveries;
 		series.push(temp);
@@ -49,3 +45,4 @@ series.sort(function (a,b){
         else return 1;
 });
 console.log(series);
+// sed '/date\|{\|city\|}/!d' matches.json
