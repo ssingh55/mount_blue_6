@@ -1,83 +1,37 @@
 const fs = require('fs');
 const csv = require('fast-csv');
 
-
-let getMatchesWonPerTeam = (matchYear, matchData, totalMatchWonPerYear) => {
+let getMatchesWonPerTeam = (matchesFile) => {
     return new Promise(function (resolve, reject) {
-        matchYear = 2017
-        totalMatchWonPerYear = [];
-
+        matchesWon = {};
+        counter=0;
         //matchData
-        fs.createReadStream('./ipl_data/test.csv').pipe(csv()).on('data', function (data, err) {
+        csv.fromPath(matchesFile)
+                .on("data", function(match){
+                    let season = match[1];
+                    let winner = match[10];
+                    if(counter){
+                        if(winner){
+                            if(!matchesWon[season]){
+                                matchesWon[season] = {};
+                            }
+                            if(!matchesWon[season][winner]){
+                                matchesWon[season][winner] = 1;
+                            }else{
+                                matchesWon[season][winner]++;
+                            }
+                        }
+                    }
+                    counter++;
+                })
+                .on("end", function(){
+                    resolve(matchesWon);
+                })
+}).catch(function (e) {
 
-            if (err) {
-                reject(err);
-            } else {
-                // console.log(data[10])
-                if ((data[10]) != 'winner' && data[1] == matchYear) {
-                    totalMatchWonPerYear.push(data[10]);
-                }
-
-            }
-
-        }).on('end', function () {
-
-            var map = totalMatchWonPerYear.reduce(noOfMatchesPerYear, {});
-
-            function noOfMatchesPerYear(counter, year) {
-
-                counter[year] = ++counter[year] || 1;
-                return counter;
-
-            }
-
-            // console.log(JSON.stringify(map));
-            // console.log(map);
-            resolve(map)
-        });
-
-    }).catch(function (e) {
-
-    })
+})
 }
-// getMatchesWonPerTeam(1).then(function(data) {
-//     try {
-//         // console.log(data);
-//         done();
-//     } catch (e) {
-//         done(e);
-//     }
-// }).catch(function(e){
-
-// });
-
-
-
-let getMatchesWonPerTeamPerYear = (matchData) => {
-    return new Promise(function (resolve, reject) {
-        var totalMatchWon = [];
-
-        fs.createReadStream('./ipl_data/test.csv').pipe(csv()).on('data', function (data, err) {
-
-            if (err) {
-                reject(err);
-            } else {
-                console.log(data[1]);
-                if (Number(data[1])) {
-                    totalMatchWon.add(data[1]);
-                }
-            }
-
-
-        }).on('end', function () {
-
-        }
-
-    }).catch(function (e) {
-
-    })
-}
-// getMatchesWonPerTeamPerYear(1).then(function(data) {
+// getMatchesWonPerTeam(matchesFile).then(function(data) {
 //     try {
 //         console.log(data);
 //         done();
@@ -92,7 +46,6 @@ let getMatchesWonPerTeamPerYear = (matchData) => {
 
 
 module.exports = {
-    getMatchesWonPerTeam: getMatchesWonPerTeam,
-    getMatchesWonPerTeamPerYear: getMatchesWonPerTeamPerYear
+    getMatchesWonPerTeam: getMatchesWonPerTeam
     // getMatchesWon: getMatchesWon
 }

@@ -8,16 +8,22 @@ const operations = require(fileName);
 const app = express();
 app.use(express.static('public'));
 
-console.log(path.join(__dirname, "/assets"));
+console.log(fileName);
 //app.use(express.static(path.join(__dirname, "/assets")));
 //app.use('assets', express.static('assets'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve('index.html'));
+    res.sendFile(path.resolve('./index.html'));
 })
 app.get('/matchesPerYear', (req, res) => {
     operations.getMatchesPerYear(matches).then(function (data) {
         res.send(data);
+    });
+})
+app.get('/matchesWonPerTeam', (req, res) => {
+    operations.getMatchesWonPerTeam(matches).then(function (data) {
+        res.send(data);
+        console.log(data);
     });
 })
 app.listen(3000);
