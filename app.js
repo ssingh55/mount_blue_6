@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const matches = path.resolve('ipl_data/matches.csv');
-// const deliveries = path.resolve('ipl/deliveries.csv');
+const deliveries = path.resolve('ipl_data/deliveries.csv');
 const fileName = path.resolve('iplStats.js');
 const operations = require(fileName);
+
 const app = express();
 app.use(express.static('public'));
 
@@ -23,7 +24,24 @@ app.get('/matchesPerYear', (req, res) => {
 app.get('/matchesWonPerTeam', (req, res) => {
     operations.getMatchesWonPerTeam(matches).then(function (data) {
         res.send(data);
-        console.log(data);
+    });
+})
+app.get('/matchesExtraRunsPerTeam', (req, res) => {
+    operations.getMatchesExtraRunsTeam(matches,deliveries,2016).then(function (data) {
+        res.send(data);
+        // console.log(data);
+    });
+})
+app.get('/topEconomicalBowlers', (req, res) => {
+    operations.getTopEconomicalBowlers(2015,matches,deliveries).then(function (data) {
+        res.send(data);
+        // console.log(data);
+    });
+})
+app.get('/topWicketTakers', (req, res) => {
+    operations.topWicketTakers(2015,matches,deliveries).then(function (data) {
+        res.send(data);
+        // console.log(data);
     });
 })
 app.listen(3000);

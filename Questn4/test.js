@@ -4,20 +4,20 @@ var path = require('path');
 var matches = path.resolve('ipl_data/test.csv')
 var deliveries = path.resolve('ipl_data/test1.csv')
 
-describe('year 2015 & 2016 top wicket takers', function () {
-    it('getting the wicket taken by the bowlers 2017', function (done) {
+describe('year 2015 & 2016 top economical bowlers', function () {
+    it('getting the extra runs conceded ', function (done) {
         let year = 2017;
         let expectedResult = {
-            "A Nehra": 2,
-            "B Kumar": 2,
-            "B Stanlake": 2,
-            "CH Morris": 3,
-            "Imran Tahir": 3,
-            "Rashid Khan": 2,
-            "Sandeep Sharma": 2,
-            "TS Mills": 2,
-            "YS Chahal": 2,
-            "Z Khan": 2
+            "B Kumar": 7,
+            "Bipul Sharma": 4,
+            "CH Morris": 5.5,
+            "Kuldeep Yadav": 6.25,
+            "P Kumar": 6.5,
+            "P Negi": 3,
+            "R Bhatia": 6.8,
+            "S Nadeem": 3.25,
+            "Swapnil Singh": 7,
+            "YS Chahal": 5.25
 
         }
         test.topEconomicalBowlers(year, matches, deliveries).then(function (data) {
@@ -30,19 +30,19 @@ describe('year 2015 & 2016 top wicket takers', function () {
         })
     })
 
-    it('getting the wicket taken by the bowlers 2016', function (done) {
+    it('getting the extra runs conceded ', function (done) {
         let year = 2016;
         let expectedResult = {
-            "A Nehra": 1,
-            "AS Rajpoot": 2,
-            "B Kumar": 2,
-            "BCJ Cutting": 0,
-            "Basil Thampi": 0,
-            "Bipul Sharma": 0,
-            "CR Woakes": 1,
-            "KH Pandya": 3,
-            "P Kumar": 1,
-            "SL Malinga": 2
+            "A Nehra": 7,
+            "B Kumar": 5.75,
+            "Bipul Sharma": 6,
+            "DS Kulkarni": 8.5,
+            "Harbhajan Singh": 6.75,
+            "KH Pandya": 6,
+            "P Kumar": 8,
+            "Rashid Khan": 4.75,
+            "S Kaushik": 7.25,
+            "SP Narine": 5.5
 
 
         }
@@ -56,19 +56,19 @@ describe('year 2015 & 2016 top wicket takers', function () {
         })
     })
 
-    it('getting the wicket taken by the bowlers 2015', function (done) {
+    it('getting the extra runs conceded ', function (done) {
         let year = 2015;
         let expectedResult = {
-            "A Mishra": 3,
-            "A Zampa": 1,
-            "AR Patel": 1,
-            "DL Chahar": 1,
-            "Imran Tahir": 1,
-            "PJ Cummins": 2,
-            "S Nadeem": 1,
-            "Sandeep Sharma": 1,
-            "YS Chahal": 1,
-            "Z Khan": 3
+            "A Mishra": 3.6666666666666665,
+            "AR Patel": 3,
+            "Imran Tahir": 6.25,
+            "P Negi": 8,
+            "PJ Cummins": 7.894736842105264,
+            "S Nadeem": 5.75,
+            "Sandeep Sharma": 6.5,
+            "VR Aaron": 5.5,
+            "YS Chahal": 8.285714285714286,
+            "Z Khan": 6.666666666666667
 
         }
         test.topEconomicalBowlers(year, matches, deliveries).then(function (data) {

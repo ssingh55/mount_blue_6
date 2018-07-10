@@ -50,7 +50,7 @@ function topWicketTakers(year, matches, deliveries) {
             maxWickets.forEach((player) => {
                 playerData[player.name] = player.data;
             })
-            // console.log(playerData);
+            console.log(playerData);
             resolve(playerData);
         })
     }).catch(function (e) {
@@ -80,7 +80,7 @@ const getMatchID = (year, matchesFile) => {
     })
 }
 
-// topWicketTakers(2017,'ipl_data/test.csv','ipl_data/test1.csv')
+// topWicketTakers(2017,'../ipl_data/test.csv','../ipl_data/test1.csv')
 
 module.exports = {
     topWicketTakers

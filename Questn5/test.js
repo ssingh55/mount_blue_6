@@ -1,26 +1,28 @@
 var expect = require('chai').expect;
-var test = require('./testquestn1.js');
+var test = require('./test-api.js');
 var path = require('path');
-var matches = path.resolve('ipl_data/test.csv')
-var deliveries = path.resolve('ipl_data/test1.csv')
+var matches = path.resolve('../ipl_data/test.csv')
+var deliveries = path.resolve('../ipl_data/test1.csv')
+
 
 describe('year 2015 & 2016 top wicket takers', function () {
     it('getting the wicket taken by the bowlers 2017', function (done) {
         let year = 2017;
         let expectedResult = {
-            "A Nehra": 2,
-            "B Kumar": 2,
-            "B Stanlake": 2,
-            "CH Morris": 3,
-            "Imran Tahir": 3,
-            "Rashid Khan": 2,
-            "Sandeep Sharma": 2,
-            "TS Mills": 2,
-            "YS Chahal": 2,
-            "Z Khan": 2
+            'Imran Tahir': 3,
+            'CH Morris': 3,
+            'Rashid Khan': 2,
+            'B Kumar': 2,
+            'A Nehra': 2,
+            'Sandeep Sharma': 2,
+            'Z Khan': 2,
+            'B Stanlake': 2,
+            'YS Chahal': 2,
+            'TS Mills': 2
 
         }
-        test.topEconomicalBowlers(year, matches, deliveries).then(function (data) {
+        console.log('hi')
+        test.topWicketTakers(year, matches, deliveries).then(function (data) {
             try {
                 expect(data).to.deep.equal(expectedResult)
                 done();
@@ -46,7 +48,7 @@ describe('year 2015 & 2016 top wicket takers', function () {
 
 
         }
-        test.topEconomicalBowlers(year, matches, deliveries).then(function (data) {
+        test.topWicketTakers(year, matches, deliveries).then(function (data) {
             try {
                 expect(data).to.deep.equal(expectedResult)
                 done();
@@ -71,7 +73,7 @@ describe('year 2015 & 2016 top wicket takers', function () {
             "Z Khan": 3
 
         }
-        test.topEconomicalBowlers(year, matches, deliveries).then(function (data) {
+        test.topWicketTakers(year, matches, deliveries).then(function (data) {
             try {
                 expect(data).to.deep.equal(expectedResult)
                 done();

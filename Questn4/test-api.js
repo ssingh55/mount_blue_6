@@ -2,10 +2,10 @@ var csv = require('fast-csv');
 var fs = require('fs');
 
 
-function topWicketTakers(year, matches, deliveries) {
+function topEconomicalBowlers(year, matches, deliveries) {
     return new Promise(async function (resolve, reject) {
         let balls = [];
-        let yearIds = await getMatchID(year, matches);
+        let specificYearIds = await getMatchID(year, matches);
         fs.readFile(deliveries, function (err, data) {
             if (err) {
                 reject(err)
@@ -13,44 +13,50 @@ function topWicketTakers(year, matches, deliveries) {
                 data.toString().split("\n").forEach(function (line, index, arr) {
                     if (index !== 0) {
                         const ball = line.split(",")
-                        // console.log(ball);
-                        if (yearIds.includes(ball[0])) {
-                            if(!balls[ball[8]]){
-                                balls[ball[8]]={
-                                    "wicket":0
-                                }
+                        if (specificYearIds.includes(ball[0])) {
+                            if (!balls[ball[8]]) {
+                                balls[ball[8]] = {
+                                    "total_run": 0,
+                                    "noOfBall": 0,
+                                    "over": 0,
+                                    'economy_rate': 0
+                                };
                             }
-                            // console.log(balls)
-                            if((ball[19]=='caught'||ball[19]=='bowled')){
-                                balls[ball[8]].wicket++;
+                            balls[ball[8]].total_run += parseInt(ball[17]);
+                            balls[ball[8]].noOfBall++;
+                            if (ball[10] != 0) {
+                                balls[ball[8]].noOfBall--;
+                            } else if (ball[13] != 0) {
+                                balls[ball[8]].noOfBall--;
                             }
                         }
-                        // console.log(ball[19])
                     }
                 })
             }
             // console.log(balls);
-            let wicketRates = [];
+            let economyRates = [];
             for (let player in balls) {
+                balls[player].over = parseInt(balls[player].noOfBall) / 6;
+                balls[player].economy_rate = balls[player].total_run / balls[player].over;
                 let playerObject = {
                     'name': player,
-                    'data': balls[player].wicket
+                    'data': balls[player].economy_rate
                 }
-                wicketRates.push(playerObject);
+                economyRates.push(playerObject);
             }
-            wicketRates.sort(function (a, b) {
-                if (parseFloat(a.data.toFixed(3)) > parseFloat(b.data.toFixed(3)))
+            economyRates.sort(function (a, b) {
+                if (parseFloat(a.data.toFixed(3)) < parseFloat(b.data.toFixed(3)))
                     return -1;
                 else
                     return 1;
             });
-            // console.log(wicketRates.slice(0, 10));
-            let maxWickets = wicketRates.slice(0, 10);
+            // console.log(economyRates.slice(0, 10));
+            let maxRunsPerOverData = economyRates.slice(0, 10);
             let playerData = {};
-            maxWickets.forEach((player) => {
+            maxRunsPerOverData.forEach((player) => {
                 playerData[player.name] = player.data;
             })
-            // console.log(playerData);
+            //console.log(playerData);
             resolve(playerData);
         })
     }).catch(function (e) {
@@ -80,8 +86,6 @@ const getMatchID = (year, matchesFile) => {
     })
 }
 
-// topWicketTakers(2017,'ipl_data/test.csv','ipl_data/test1.csv')
-
 module.exports = {
-    topWicketTakers
+    topEconomicalBowlers
 }
