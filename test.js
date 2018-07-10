@@ -1,30 +1,22 @@
 var expect = require('chai').expect;
 var test = require('./testquestn1.js');
+var path=require('path');
+var matches = path.resolve('ipl_data/test.csv')
+var deliveries = path.resolve('ipl_data/test1.csv')
 
-describe('matches won of all teams over all the years of IPL', function () {
-    it('getting the number of matches won ', function (done) {
+describe('extra runs all teams over 2016 years of IPL', function () {
+    it('getting the extra runs conceded ', function (done) {
         let expectedResult = {
-            //['2017','2016,2015]
-            "2017": {
-                //    "Delhi Daredevils": 0,
-                   "Kings XI Punjab": 1,
-                   "Kolkata Knight Riders": 1,
-                //    "Mumbai Indians": 0,
-                   "Rising Pune Supergiants": 1,
-                   "Royal Challengers Bangalore": 1,
-                   "Sunrisers Hyderabad": 1
-                 },
-                 "2016": {
-                    "Mumbai Indians": 1,
-                    "Sunrisers Hyderabad": 1
-                  },
-                  "2015": {
-                    "Delhi Daredevils": 1,
-                    "Kings XI Punjab": 1
-                  }
-          
+            'Royal Challengers Bangalore': 36,
+            'Sunrisers Hyderabad': 18,
+            'Rising Pune Supergiant': 52,
+            'Mumbai Indians': 26,
+            'Kolkata Knight Riders': 32,
+            'Gujarat Lions': 36,
+            'Kings XI Punjab': 20,
+            'Delhi Daredevils': 22
         }
-        test.getMatchesWonPerTeam('./ipl_data/test.csv').then(function (data) {
+        test.getMatchesExtraRunsTeam(matches,deliveries).then(function (data) {
             try {
                 expect(data).to.deep.equal(expectedResult)
                 done();
@@ -36,7 +28,7 @@ describe('matches won of all teams over all the years of IPL', function () {
 
     
 
-    it('testing false is working', function () {
+   xit('testing false is working', function () {
         expect(true).equal(false);
     })
 })

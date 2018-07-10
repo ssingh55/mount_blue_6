@@ -79,7 +79,7 @@ $(document).ready(function () {
                     stacking: 'normal'
                 }
             };
-            console.log(Object.values(myJson)[0]);
+            // console.log(Object.values(myJson)[0]);
             var series = [{
                 name: ['data'],
                 data: Object.values(myJson)

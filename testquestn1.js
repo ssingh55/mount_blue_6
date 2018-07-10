@@ -1,35 +1,48 @@
 const fs = require('fs');
 const csv = require('fast-csv');
 
-let getMatchesWonPerTeam = (matchesFile) => {
+let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile) => {
     return new Promise(function (resolve, reject) {
-        matchesWon = {};
-        counter=0;
+        extraRunsConceded = {};
+        counter = 0;
+        matchesFile = './ipl_data/test.csv'
+        deliveriesFile = './ipl_data/test1.csv'
         //matchData
         csv.fromPath(matchesFile)
-                .on("data", function(match){
-                    let season = match[1];
-                    let winner = match[10];
-                    if(counter){
-                        if(winner){
-                            if(!matchesWon[season]){
-                                matchesWon[season] = {};
+            .on("data", function (match) {
+                match = match.filter(data => match[1] == 2016)
+                csv.fromPath(deliveriesFile)
+                    .on("data", function (deliveries) {
+                        // console.log(match)
+                        // console.log(deliveries)
+                        // console.log(match)
+                        let extraRuns = deliveries[16];
+                        let bowlingTeam = deliveries[3];
+                        // console.log(extraRuns+"   "+bowlingTeam)
+                        if (match[1] == 2016) {
+                            if (counter) {
+                                if (Number(extraRuns)) {
+                                    if (!extraRunsConceded[bowlingTeam]) {
+                                        extraRunsConceded[bowlingTeam] = Number(extraRuns);
+                                        // console.log(extraRunsConceded[bowlingTeam]);
+                                    } else {
+                                        // console.log('hello')
+                                        extraRunsConceded[bowlingTeam] += Number(extraRuns);
+                                    }
+                                }
                             }
-                            if(!matchesWon[season][winner]){
-                                matchesWon[season][winner] = 1;
-                            }else{
-                                matchesWon[season][winner]++;
-                            }
+                            counter++;
+                            // console.log(extraRunsConceded);
                         }
-                    }
-                    counter++;
-                })
-                .on("end", function(){
-                    resolve(matchesWon);
-                })
-}).catch(function (e) {
+                    })
+            })
+            .on("end", function () {
+                console.log('hi' + extraRunsConceded);
+                resolve(extraRunsConceded);
+            })
+    }).catch(function (e) {
 
-})
+    })
 }
 // getMatchesWonPerTeam(matchesFile).then(function(data) {
 //     try {
@@ -44,8 +57,6 @@ let getMatchesWonPerTeam = (matchesFile) => {
 
 
 
-
 module.exports = {
-    getMatchesWonPerTeam: getMatchesWonPerTeam
-    // getMatchesWon: getMatchesWon
+    getMatchesExtraRunsTeam
 }
