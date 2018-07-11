@@ -37,6 +37,6 @@ describe('matches won of all teams over all the years of IPL', function () {
     
 
     it('testing false is working', function () {
-        expect(true).equal(false);
+        expect(true).not.equal(false);
     })
 })

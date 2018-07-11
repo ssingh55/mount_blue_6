@@ -30,9 +30,7 @@ let getMatchesPerYear = (matchData) => {
 
             }
 
-            // console.log(JSON.stringify(map));
-            console.log(map);
-            resolve(map)
+               resolve(map)
         });
 
     }).catch(function(e) {
@@ -41,7 +39,6 @@ let getMatchesPerYear = (matchData) => {
 }
 getMatchesPerYear(1).then(function(data) {
     try {
-        // console.log(data);
         done();
     } catch (e) {
         done(e);

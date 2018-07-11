@@ -27,21 +27,18 @@ app.get('/matchesWonPerTeam', (req, res) => {
     });
 })
 app.get('/matchesExtraRunsPerTeam', (req, res) => {
-    operations.getMatchesExtraRunsTeam(matches,deliveries,2016).then(function (data) {
+    operations.getMatchesExtraRunsTeam(matches, deliveries, 2016).then(function (data) {
         res.send(data);
-        // console.log(data);
     });
 })
 app.get('/topEconomicalBowlers', (req, res) => {
-    operations.getTopEconomicalBowlers(2015,matches,deliveries).then(function (data) {
+    operations.getTopEconomicalBowlers(2015, matches, deliveries).then(function (data) {
         res.send(data);
-        // console.log(data);
     });
 })
 app.get('/topWicketTakers', (req, res) => {
-    operations.topWicketTakers(2015,matches,deliveries).then(function (data) {
+    operations.topWicketTakers(2015, matches, deliveries).then(function (data) {
         res.send(data);
-        // console.log(data);
     });
 })
 app.listen(3000);

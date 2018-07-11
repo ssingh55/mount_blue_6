@@ -3,10 +3,10 @@ const csv = require('fast-csv');
 
 //question1
 let getMatchesPerYear = (matchData) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var totalMatchPerYear = [];
 
-        fs.createReadStream('./ipl_data/matches.csv').pipe(csv()).on('data', function(data, err) {
+        fs.createReadStream('./ipl_data/matches.csv').pipe(csv()).on('data', function (data, err) {
 
             if (err) {
                 reject(err);
@@ -19,7 +19,7 @@ let getMatchesPerYear = (matchData) => {
             }
 
 
-        }).on('end', function() {
+        }).on('end', function () {
 
             var map = totalMatchPerYear.reduce(noOfMatchesPerYear, {});
 
@@ -30,12 +30,10 @@ let getMatchesPerYear = (matchData) => {
 
             }
 
-            // console.log(JSON.stringify(map));
-            // console.log(map);
             resolve(map)
         });
 
-    }).catch(function(e) {
+    }).catch(function (e) {
 
     })
 }
@@ -47,89 +45,77 @@ let getMatchesPerYear = (matchData) => {
 let getMatchesWonPerTeam = (matchesFile) => {
     return new Promise(function (resolve, reject) {
         matchesWon = {};
-        counter=0;
+        counter = 0;
         let nextSeason;
         //matchData
         csv.fromPath(matchesFile)
-                .on("data", function(match){
-                    let season = match[1];
-                    let winner = match[10];
+            .on("data", function (match) {
+                let season = match[1];
+                let winner = match[10];
 
 
-                    if(counter){
-                        if(winner){
-                            if(!matchesWon[winner]){
-                                matchesWon[winner] = {};
-                            }
-                            if(!matchesWon[winner][season]){
-                                matchesWon[winner][season] = 1;
-                            }else{
-                                matchesWon[winner][season]++;
-                            }
+                if (counter) {
+                    if (winner) {
+                        if (!matchesWon[winner]) {
+                            matchesWon[winner] = {};
+                        }
+                        if (!matchesWon[winner][season]) {
+                            matchesWon[winner][season] = 1;
+                        } else {
+                            matchesWon[winner][season]++;
                         }
                     }
+                }
 
-                    
-                    counter++;
-                })
-                .on("end", function(){
-                    console.log(matchesWon)
-                    resolve(matchesWon);
-                })
-}).catch(function (e) {
 
-})
+                counter++;
+            })
+            .on("end", function () {
+                resolve(matchesWon);
+            })
+    }).catch(function (e) {
+
+    })
 }
 
 //question3
-let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile,year) => {
+let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
     return new Promise(function (resolve, reject) {
             extraRunsConceded = {};
             counter = 0;
             let matchesData = [];
             //matchData
-            
+
             csv.fromPath(matchesFile)
                 .on("data", function (match) {
-                    // console.log(match)
-                    if(match[1] == year)
+                    if (match[1] == year)
                         matchesData.push(match[0])
-                    // console.log(matchesData)
                 }).on("end", function () {
-                    // console.log(matchesData);
                     resolve(matchesData)
                 })
-            // console.log(matchesData + "out");
 
         })
         .then(function (matchesData) {
             return new Promise(function (resolve, reject) {
-                // console.log(matchesData)
                     // matchesData.forEach(function(match){
                     csv.fromPath(deliveriesFile)
                         .on("data", function (deliveries) {
                             let extraRuns = deliveries[16];
                             let bowlingTeam = deliveries[3];
-                            // console.log(extraRuns+"   "+bowlingTeam)
-                            // console.log(match)
                             if (matchesData.includes(deliveries[0])) {
                                 if (counter) {
                                     if (Number(extraRuns)) {
                                         if (!extraRunsConceded[bowlingTeam]) {
                                             extraRunsConceded[bowlingTeam] = Number(extraRuns);
-                                            // console.log(extraRunsConceded[bowlingTeam]);
                                         } else {
-                                            // console.log('hello')
                                             extraRunsConceded[bowlingTeam] += Number(extraRuns);
                                         }
                                     }
                                 }
                                 counter++;
-                                // console.log(extraRunsConceded);
                             }
                         })
                         .on("end", function () {
-                            // console.log(extraRunsConceded);
                             resolve(extraRunsConceded);
                         })
                     // })
@@ -175,7 +161,6 @@ function getTopEconomicalBowlers(year, matches, deliveries) {
                     }
                 })
             }
-            // console.log(balls);
             let economyRates = [];
             for (let player in balls) {
                 balls[player].over = parseInt(balls[player].noOfBall) / 6;
@@ -192,13 +177,11 @@ function getTopEconomicalBowlers(year, matches, deliveries) {
                 else
                     return 1;
             });
-            // console.log(economyRates.slice(0, 10));
             let maxRunsPerOverData = economyRates.slice(0, 10);
             let playerData = {};
             maxRunsPerOverData.forEach((player) => {
                 playerData[player.name] = player.data;
             })
-            //console.log(playerData);
             resolve(playerData);
         })
     }).catch(function (e) {
@@ -215,15 +198,11 @@ const getMatchID = (year, matchesFile) => {
 
         csv.fromPath(matchesFile)
             .on("data", function (match) {
-                // console.log(match)
                 if (match[1] == year)
                     matchIds.push(match[0])
-                // console.log(matchIds)
             }).on("end", function () {
-                // console.log(matchIds);
                 resolve(matchIds)
             })
-        // console.log(matchIds + "out");
 
     })
 }
@@ -241,23 +220,19 @@ function topWicketTakers(year, matches, deliveries) {
                 data.toString().split("\n").forEach(function (line, index, arr) {
                     if (index !== 0) {
                         const ball = line.split(",")
-                        // console.log(ball);
                         if (yearIds.includes(ball[0])) {
-                            if(!balls[ball[8]]){
-                                balls[ball[8]]={
-                                    "wicket":0
+                            if (!balls[ball[8]]) {
+                                balls[ball[8]] = {
+                                    "wicket": 0
                                 }
                             }
-                            // console.log(balls)
-                            if((ball[19]=='caught'||ball[19]=='bowled')){
+                            if ((ball[19] == 'caught' || ball[19] == 'bowled')) {
                                 balls[ball[8]].wicket++;
                             }
                         }
-                        // console.log(ball[19])
                     }
                 })
             }
-            // console.log(balls);
             let wicketRates = [];
             for (let player in balls) {
                 let playerObject = {
@@ -272,13 +247,11 @@ function topWicketTakers(year, matches, deliveries) {
                 else
                     return 1;
             });
-            // console.log(wicketRates.slice(0, 10));
             let maxWickets = wicketRates.slice(0, 10);
             let playerData = {};
             maxWickets.forEach((player) => {
                 playerData[player.name] = player.data;
             })
-            // console.log(playerData);
             resolve(playerData);
         })
     }).catch(function (e) {

@@ -31,21 +31,10 @@ let getMatchesWonPerTeam = (matchesFile) => {
 
 })
 }
-// getMatchesWonPerTeam(matchesFile).then(function(data) {
-//     try {
-//         console.log(data);
-//         done();
-//     } catch (e) {
-//         done(e);
-//     }
-// }).catch(function(e){
-
-// });
 
 
 
 
 module.exports = {
     getMatchesWonPerTeam: getMatchesWonPerTeam
-    // getMatchesWon: getMatchesWon
 }

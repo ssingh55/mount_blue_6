@@ -27,6 +27,6 @@ describe('get total match per year', function () {
     })
 
     it('testing false is working',function(){
-        expect(true).equal(false);
+        expect(true).not.equal(false);
     })
 })

@@ -33,7 +33,6 @@ function topEconomicalBowlers(year, matches, deliveries) {
                     }
                 })
             }
-            // console.log(balls);
             let economyRates = [];
             for (let player in balls) {
                 balls[player].over = parseInt(balls[player].noOfBall) / 6;
@@ -50,13 +49,11 @@ function topEconomicalBowlers(year, matches, deliveries) {
                 else
                     return 1;
             });
-            // console.log(economyRates.slice(0, 10));
             let maxRunsPerOverData = economyRates.slice(0, 10);
             let playerData = {};
             maxRunsPerOverData.forEach((player) => {
                 playerData[player.name] = player.data;
             })
-            //console.log(playerData);
             resolve(playerData);
         })
     }).catch(function (e) {
@@ -73,15 +70,11 @@ const getMatchID = (year, matchesFile) => {
 
         csv.fromPath(matchesFile)
             .on("data", function (match) {
-                // console.log(match)
                 if (match[1] == year)
                     matchIds.push(match[0])
-                // console.log(matchIds)
             }).on("end", function () {
-                // console.log(matchIds);
                 resolve(matchIds)
-            })
-        // console.log(matchIds + "out");
+             })
 
     })
 }

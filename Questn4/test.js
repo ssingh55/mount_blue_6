@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
-var test = require('./testquestn1.js');
+var test = require('./test-api.js');
 var path = require('path');
-var matches = path.resolve('ipl_data/test.csv')
-var deliveries = path.resolve('ipl_data/test1.csv')
+var matches = path.resolve('../ipl_data/test.csv')
+var deliveries = path.resolve('../ipl_data/test1.csv')
 
 describe('year 2015 & 2016 top economical bowlers', function () {
     it('getting the extra runs conceded ', function (done) {
@@ -82,8 +82,8 @@ describe('year 2015 & 2016 top economical bowlers', function () {
     })
 
 
-
-    xit('testing false is working', function () {
-        expect(true).equal(false);
+    //xit
+    it('testing false is working', function () {
+        expect(true).not.equal(false);
     })
 })

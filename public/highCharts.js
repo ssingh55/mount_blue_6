@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    //charts1
 
 
     fetch('/matchesPerYear')
@@ -49,7 +48,6 @@ $(document).ready(function () {
         });
 
 
-    //charts2
 
 
     fetch('/matchesWonPerTeam')
@@ -57,30 +55,24 @@ $(document).ready(function () {
             return response.json();
         })
         .then(function (myJson) {
-            console.log(myJson)
-            // console.log(Object.keys(myJson))
+
             let teamNames = Object.keys(myJson);
-            // console.log(teamNames);
             let seriesData = [],
                 years = new Set();
             for (var i = 0; i < teamNames.length; i++) {
                 var tempArray = Object.values(myJson[teamNames[i]])
-                // console.log(tempArray);
                 var tempObj = {
                     name: teamNames[i],
                     data: tempArray
                 }
-                console.log(tempObj)
                 seriesData.push(tempObj);
-                // console.log(seriesData)
                 Object.keys(myJson[teamNames[i]]).forEach((year) => {
                     years.add(year);
                 })
 
             }
-            // console.log(Array.from(years).sort());
-           
-           
+
+
 
             var chart = {
                 type: 'bar'
@@ -102,16 +94,11 @@ $(document).ready(function () {
                 }
             };
             var plotOptions = {
-                bar: {
-                    // dataLabels: {
-                    //     enabled: true
-                    // }
-                },
+                bar: {},
                 series: {
                     stacking: 'normal'
                 }
             };
-            // console.log(Object.values(myJson)[0]);
             var series = seriesData;
 
             var json = {};
@@ -127,7 +114,6 @@ $(document).ready(function () {
 
 
 
-    //charts3
 
 
     fetch('/matchesExtraRunsPerTeam')
@@ -177,7 +163,6 @@ $(document).ready(function () {
         });
 
 
-    //charts4
 
     fetch('/topEconomicalBowlers')
         .then(function (response) {
@@ -225,7 +210,6 @@ $(document).ready(function () {
             $('#container4').highcharts(json);
         });
 
-    //charts 5
 
 
     fetch('/topWicketTakers')

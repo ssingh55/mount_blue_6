@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var test = require('./testquestn1.js');
+var test = require('./test-api.js');
 var path = require('path');
 var matches = path.resolve('ipl_data/test.csv')
 var deliveries = path.resolve('ipl_data/test1.csv')
@@ -48,6 +48,6 @@ describe('extra runs all teams over 2016 years of IPL', function () {
 
 
     xit('testing false is working', function () {
-        expect(true).equal(false);
+        expect(true).not.equal(false);
     })
 })

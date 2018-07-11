@@ -21,7 +21,6 @@ describe('year 2015 & 2016 top wicket takers', function () {
             'TS Mills': 2
 
         }
-        console.log('hi')
         test.topWicketTakers(year, matches, deliveries).then(function (data) {
             try {
                 expect(data).to.deep.equal(expectedResult)
