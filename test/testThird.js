@@ -5,11 +5,9 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
     return new Promise(function (resolve, reject) {
             extraRunsConceded = {};
             counter = 0;
-            // matchesFile = './ipl_data/test.csv'
-            // deliveriesFile = './ipl_data/test1.csv'
             let matchesData = [];
+            
             //matchData
-
             csv.fromPath(matchesFile)
                 .on("data", function (match) {
                     if (match[1] == year)
@@ -17,7 +15,6 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
                 }).on("end", function () {
                     resolve(matchesData)
                 })
-
         })
         .then(function (matchesData) {
             return new Promise(function (resolve, reject) {
@@ -43,25 +40,11 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
                         .on("end", function () {
                             resolve(extraRunsConceded);
                         })
-                    // })
                 })
                 .catch(function (e) {
-
                 })
         })
 }
-// getMatchesWonPerTeam(matchesFile).then(function(data) {
-//     tr  console.log(data);
-//         done();
-//     } catch (e) {
-//         done(e);
-//     }
-// }).catch(function(e){
-
-// });
-
-// getMatchesExtraRunsTeam(1, 1)
-
 module.exports = {
     getMatchesExtraRunsTeam
 }

@@ -1,45 +1,32 @@
 const fs = require('fs');
 const csv = require('fast-csv');
+const path = require('path');
+const fileName = path.resolve('iplData/matches.csv')
 
 //question1
 let getMatchesPerYear = (matchData) => {
     return new Promise(function (resolve, reject) {
         var totalMatchPerYear = [];
-
-        fs.createReadStream('./ipl_data/matches.csv').pipe(csv()).on('data', function (data, err) {
-
+        fs.createReadStream(matchData).pipe(csv()).on('data', function (data, err) {
             if (err) {
                 reject(err);
             } else {
                 if (Number(data[1])) {
-
                     totalMatchPerYear.push(data[1]);
                 }
-
             }
-
-
         }).on('end', function () {
-
             var map = totalMatchPerYear.reduce(noOfMatchesPerYear, {});
-
             function noOfMatchesPerYear(counter, year) {
-
                 counter[year] = ++counter[year] || 1;
                 return counter;
-
             }
-
             resolve(map)
         });
-
     }).catch(function (e) {
 
     })
 }
-
-
-
 
 //question2
 let getMatchesWonPerTeam = (matchesFile) => {
@@ -47,13 +34,12 @@ let getMatchesWonPerTeam = (matchesFile) => {
         matchesWon = {};
         counter = 0;
         let nextSeason;
+        
         //matchData
         csv.fromPath(matchesFile)
             .on("data", function (match) {
                 let season = match[1];
                 let winner = match[10];
-
-
                 if (counter) {
                     if (winner) {
                         if (!matchesWon[winner]) {
@@ -66,8 +52,6 @@ let getMatchesWonPerTeam = (matchesFile) => {
                         }
                     }
                 }
-
-
                 counter++;
             })
             .on("end", function () {
@@ -84,8 +68,8 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
             extraRunsConceded = {};
             counter = 0;
             let matchesData = [];
+            
             //matchData
-
             csv.fromPath(matchesFile)
                 .on("data", function (match) {
                     if (match[1] == year)
@@ -93,7 +77,6 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
                 }).on("end", function () {
                     resolve(matchesData)
                 })
-
         })
         .then(function (matchesData) {
             return new Promise(function (resolve, reject) {
@@ -118,7 +101,6 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
                         .on("end", function () {
                             resolve(extraRunsConceded);
                         })
-                    // })
                 })
                 .catch(function (e) {
 
@@ -126,10 +108,7 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile, year) => {
         })
 }
 
-
 //question4
-
-
 function getTopEconomicalBowlers(year, matches, deliveries) {
     return new Promise(async function (resolve, reject) {
         let balls = [];
@@ -194,8 +173,8 @@ const getMatchID = (year, matchesFile) => {
     return new Promise(function (resolve, reject) {
         extraRunsConceded = {};
         counter = 0;
+       
         //matchData
-
         csv.fromPath(matchesFile)
             .on("data", function (match) {
                 if (match[1] == year)
@@ -203,10 +182,8 @@ const getMatchID = (year, matchesFile) => {
             }).on("end", function () {
                 resolve(matchIds)
             })
-
     })
 }
-
 
 //question5
 function topWicketTakers(year, matches, deliveries) {
@@ -259,12 +236,10 @@ function topWicketTakers(year, matches, deliveries) {
     })
 }
 
-
 module.exports = {
     getMatchesPerYear,
     getMatchesWonPerTeam,
     getMatchesExtraRunsTeam,
     getTopEconomicalBowlers,
     topWicketTakers
-
 }

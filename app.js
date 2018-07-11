@@ -1,18 +1,15 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const matches = path.resolve('ipl_data/matches.csv');
-const deliveries = path.resolve('ipl_data/deliveries.csv');
+const matches = path.resolve('iplData/matches.csv');
+const deliveries = path.resolve('iplData/deliveries.csv');
 const fileName = path.resolve('iplStats.js');
 const operations = require(fileName);
 
 const app = express();
 app.use(express.static('public'));
-
-console.log(fileName);
 //app.use(express.static(path.join(__dirname, "/assets")));
 //app.use('assets', express.static('assets'));
-
 app.get('/', (req, res) => {
     res.sendFile(path.resolve('./index.html'));
 })

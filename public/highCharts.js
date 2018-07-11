@@ -1,12 +1,11 @@
-$(document).ready(function () {
-
+$(document).ready(function() {
 
     //graph1
     fetch('/matchesPerYear')
-        .then(function (response) {
+        .then(function(response) {
             return response.json();
         })
-        .then(function (myJson) {
+        .then(function(myJson) {
             var chart = {
                 type: 'column'
             };
@@ -47,15 +46,12 @@ $(document).ready(function () {
             $('#container1').highcharts(json);
         });
 
-
-
-        //graph2
+    //graph2
     fetch('/matchesWonPerTeam')
-        .then(function (response) {
+        .then(function(response) {
             return response.json();
         })
-        .then(function (myJson) {
-
+        .then(function(myJson) {
             let teamNames = Object.keys(myJson);
             let seriesData = [],
                 years = new Set();
@@ -74,11 +70,7 @@ $(document).ready(function () {
                 Object.keys(myJson[teamNames[i]]).forEach((year) => {
                     years.add(year);
                 })
-
             }
-
-
-
             var chart = {
                 type: 'bar'
             };
@@ -117,15 +109,12 @@ $(document).ready(function () {
             $('#container2').highcharts(json);
         });
 
-
-
-
-        //graph3
+    //graph3
     fetch('/matchesExtraRunsPerTeam')
-        .then(function (response) {
+        .then(function(response) {
             return response.json();
         })
-        .then(function (myJson) {
+        .then(function(myJson) {
             var chart = {
                 type: 'column'
             };
@@ -155,7 +144,6 @@ $(document).ready(function () {
                 name: ['Teams'],
                 data: Object.values(myJson)
             }];
-
             var json = {};
             json.chart = chart;
             json.title = title;
@@ -167,15 +155,12 @@ $(document).ready(function () {
             $('#container3').highcharts(json);
         });
 
-
-
-        //graph4
-
+    //graph4
     fetch('/topEconomicalBowlers')
-        .then(function (response) {
+        .then(function(response) {
             return response.json();
         })
-        .then(function (myJson) {
+        .then(function(myJson) {
             var chart = {
                 type: 'column'
             };
@@ -205,7 +190,6 @@ $(document).ready(function () {
                 name: ['Players'],
                 data: Object.values(myJson)
             }];
-
             var json = {};
             json.chart = chart;
             json.title = title;
@@ -217,13 +201,12 @@ $(document).ready(function () {
             $('#container4').highcharts(json);
         });
 
-
-        //graph5
+    //graph5
     fetch('/topWicketTakers')
-        .then(function (response) {
+        .then(function(response) {
             return response.json();
         })
-        .then(function (myJson) {
+        .then(function(myJson) {
             var chart = {
                 type: 'column'
             };
@@ -253,7 +236,6 @@ $(document).ready(function () {
                 name: ['Players'],
                 data: Object.values(myJson)
             }];
-
             var json = {};
             json.chart = chart;
             json.title = title;
@@ -264,6 +246,4 @@ $(document).ready(function () {
             json.plotOptions = plotOptions;
             $('#container5').highcharts(json);
         });
-
-
 });
