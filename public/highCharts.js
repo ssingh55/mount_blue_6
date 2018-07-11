@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 
-
+    //graph1
     fetch('/matchesPerYear')
         .then(function (response) {
             return response.json();
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
 
 
-
+        //graph2
     fetch('/matchesWonPerTeam')
         .then(function (response) {
             return response.json();
@@ -60,12 +60,17 @@ $(document).ready(function () {
             let seriesData = [],
                 years = new Set();
             for (var i = 0; i < teamNames.length; i++) {
-                var tempArray = Object.values(myJson[teamNames[i]])
-                var tempObj = {
-                    name: teamNames[i],
-                    data: tempArray
+                let data = [];
+                for (let year = 2008; year < 2018; year++) {
+                    if (myJson[teamNames[i]].hasOwnProperty(year))
+                        data.push(myJson[teamNames[i]][year])
+                    else
+                        data.push(0)
                 }
-                seriesData.push(tempObj);
+                seriesData.push({
+                    name: teamNames[i],
+                    data: data
+                });
                 Object.keys(myJson[teamNames[i]]).forEach((year) => {
                     years.add(year);
                 })
@@ -115,7 +120,7 @@ $(document).ready(function () {
 
 
 
-
+        //graph3
     fetch('/matchesExtraRunsPerTeam')
         .then(function (response) {
             return response.json();
@@ -164,6 +169,8 @@ $(document).ready(function () {
 
 
 
+        //graph4
+
     fetch('/topEconomicalBowlers')
         .then(function (response) {
             return response.json();
@@ -211,7 +218,7 @@ $(document).ready(function () {
         });
 
 
-
+        //graph5
     fetch('/topWicketTakers')
         .then(function (response) {
             return response.json();
