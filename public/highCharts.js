@@ -57,23 +57,30 @@ $(document).ready(function () {
             return response.json();
         })
         .then(function (myJson) {
+            console.log(myJson)
             // console.log(Object.keys(myJson))
             let teamNames = Object.keys(myJson);
+            // console.log(teamNames);
             let seriesData = [],
                 years = new Set();
             for (var i = 0; i < teamNames.length; i++) {
                 var tempArray = Object.values(myJson[teamNames[i]])
+                // console.log(tempArray);
                 var tempObj = {
                     name: teamNames[i],
                     data: tempArray
                 }
+                console.log(tempObj)
                 seriesData.push(tempObj);
+                // console.log(seriesData)
                 Object.keys(myJson[teamNames[i]]).forEach((year) => {
                     years.add(year);
                 })
 
             }
             // console.log(Array.from(years).sort());
+           
+           
 
             var chart = {
                 type: 'bar'
@@ -96,9 +103,9 @@ $(document).ready(function () {
             };
             var plotOptions = {
                 bar: {
-                    dataLabels: {
-                        enabled: true
-                    }
+                    // dataLabels: {
+                    //     enabled: true
+                    // }
                 },
                 series: {
                     stacking: 'normal'
@@ -242,7 +249,7 @@ $(document).ready(function () {
             var yAxis = {
                 min: 0,
                 title: {
-                    text: 'Economy Rate'
+                    text: 'Wicket takers'
                 }
             };
             var plotOptions = {

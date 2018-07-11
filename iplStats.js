@@ -56,24 +56,24 @@ let getMatchesWonPerTeam = (matchesFile) => {
                     let winner = match[10];
 
 
-                    if (season != nextSeason) {
-                        nextSeason = season
-                        matchesWon[season] = {};
-                    } else {
-                        if(counter){
-                            if(winner){
-                                if(!matchesWon[season][winner]){
-                                    matchesWon[season][winner] = 1;
-                                }else{
-                                    matchesWon[season][winner]++;
-                                }
+                    if(counter){
+                        if(winner){
+                            if(!matchesWon[winner]){
+                                matchesWon[winner] = {};
+                            }
+                            if(!matchesWon[winner][season]){
+                                matchesWon[winner][season] = 1;
+                            }else{
+                                matchesWon[winner][season]++;
                             }
                         }
                     }
+
                     
                     counter++;
                 })
                 .on("end", function(){
+                    console.log(matchesWon)
                     resolve(matchesWon);
                 })
 }).catch(function (e) {
@@ -129,7 +129,7 @@ let getMatchesExtraRunsTeam = (matchesFile, deliveriesFile,year) => {
                             }
                         })
                         .on("end", function () {
-                            console.log(extraRunsConceded);
+                            // console.log(extraRunsConceded);
                             resolve(extraRunsConceded);
                         })
                     // })
@@ -278,7 +278,7 @@ function topWicketTakers(year, matches, deliveries) {
             maxWickets.forEach((player) => {
                 playerData[player.name] = player.data;
             })
-            console.log(playerData);
+            // console.log(playerData);
             resolve(playerData);
         })
     }).catch(function (e) {
