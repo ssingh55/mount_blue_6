@@ -33,6 +33,7 @@ $(document).ready(function() {
             };
             var series = [{
                 name: ['data'],
+                'colorByPoint': true,
                 data: Object.values(myJson)
             }];
             var json = {};
@@ -142,6 +143,7 @@ $(document).ready(function() {
             };
             var series = [{
                 name: ['Teams'],
+                'colorByPoint': true,
                 data: Object.values(myJson)
             }];
             var json = {};
@@ -188,6 +190,7 @@ $(document).ready(function() {
             };
             var series = [{
                 name: ['Players'],
+                'colorByPoint': true,
                 data: Object.values(myJson)
             }];
             var json = {};
@@ -234,6 +237,7 @@ $(document).ready(function() {
             };
             var series = [{
                 name: ['Players'],
+                'colorByPoint': true,
                 data: Object.values(myJson)
             }];
             var json = {};
